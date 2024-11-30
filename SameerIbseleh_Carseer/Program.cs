@@ -1,3 +1,5 @@
+using SameerIbseleh_Carseer.Services.HomeServices;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -10,7 +12,7 @@ var connectionString = builder.Configuration.GetConnectionString(name: "DefaultC
 builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(connectionString));
 
 builder.Services.AddControllersWithViews();
-
+builder.Services.AddScoped<IHomeService, HomeService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
