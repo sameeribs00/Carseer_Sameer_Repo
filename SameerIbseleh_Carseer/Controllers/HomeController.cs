@@ -29,6 +29,7 @@ namespace SameerIbseleh_Carseer.Controllers
         #endregion
 
         #region EndPonits
+        [HttpPost]
         public async Task<IActionResult> GetAllMakes()
         {
             try

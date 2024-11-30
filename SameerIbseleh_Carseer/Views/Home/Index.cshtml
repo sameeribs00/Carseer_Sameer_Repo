@@ -1,13 +1,6 @@
 ﻿@{
     ViewData["Title"] = "Vehicles";
 }
-
-@* <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div> *@
-@* <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css"> *@
-
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -16,187 +9,163 @@
     <link href="~/css/home-radio-input.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdn.datatables.net/2.1.8/css/dataTables.bootstrap5.css">
 </head>
-<body>
+<body id="app">
     <div class="row">
         <div class="col-lg-5"></div>
         <div class="col-lg-2">
             <div class="radio-input">
                 <label class="label">
-                    <input value="all-makes" name="value-radio" id="value-1" type="radio" checked />
+                    <input v-model="radioType" :value="1" name="value-radio" id="value-1" type="radio" checked />
                     <span class="text">All Makes</span>
                 </label>
                 <label class="label">
-                    <input value="vehicle-types" name="value-radio" id="value-2" type="radio" />
+                    <input v-model="radioType" :value="2" name="value-radio" id="value-2" type="radio" />
                     <span class="text">Vehicle Types</span>
                 </label>
                 <label class="label">
-                    <input value="vehicle-models" name="value-radio" id="value-3" type="radio" />
+                    <input v-model="radioType" :value="3" name="value-radio" id="value-3" type="radio" />
                     <span class="text">Vehicle Models</span>
                 </label>
             </div>
         </div>
         <div class="col-lg-5"></div>
     </div>
-    <div class="row">
-        <div id="allMakes_div">
-            <div class="col-lg-12 p-3">
-                <h3>All Makes Data</h3><br />
-                <table id="example" class="table table-striped" style="width:100%">
-                    <thead class="table-dark">
-                        <tr>
-                            <th>Mark Id</th>
-                            <th>Mark Name</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <th>Mark Id test data</th>
-                            <th>Mark Name test data</th>
-                        </tr>
-                        <tr>
-                            <th>Mark Id test data</th>
-                            <th>Mark Name test data</th>
-                        </tr>
-                        <tr>
-                            <th>Mark Id test data</th>
-                            <th>Mark Name test data</th>
-                        </tr>
-                        <tr>
-                            <th>Mark Id test data</th>
-                            <th>Mark Name test data</th>
-                        </tr>
-                    </tbody>
-                    <tfoot>
-                    </tfoot>
-                </table>
+    <div class="row mt-4">
+        <div v-if="radioType == 1" class="card border-warning mb-3 rounded">
+            <div class="card-body p-2">
+                <div>
+                    <div class="col-lg-12 p-3">
+                        <h3>All Makes</h3><br />
+                        <table id="allMakes_table" class="table table-striped" style="width:100%">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th>Mark Id</th>
+                                    <th>Mark Name</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="(makes,index) in allMakes">
+                                    <td>
+                                        {{makes.make_ID}}
+                                    </td>
+                                    <td>
+                                        {{makes.make_Name}}
+                                    </td>
+                                </tr>
+                            </tbody>
+                            <tfoot>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
-        <div id="vehicleTypes_div" style="display: none;">
-            <div class="col-lg-12 p-3">
-                <table id="vehicleTypes_table" class="table table-striped" style="width:100%">
-                    <thead class="table-dark">
-                        <tr>
-                            <th>Vehicle Type Id</th>
-                            <th>Vehicle Type Name</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <th>Vehicle Type Id test data</th>
-                            <th>Vehicle Type Name test data</th>
-                        </tr>
-                        <tr>
-                            <th>Vehicle Type Id test data</th>
-                            <th>Vehicle Type Name test data</th>
-                        </tr>
-                        <tr>
-                            <th>Vehicle Type Id test data</th>
-                            <th>Vehicle Type Name test data</th>
-                        </tr>
-                        <tr>
-                            <th>Vehicle Type Id test data</th>
-                            <th>Vehicle Type Name test data</th>
-                        </tr>
-                        <tr>
-                            <th>Vehicle Type Id test data</th>
-                            <th>Vehicle Type Name test data</th>
-                        </tr>
-                        <tr>
-                            <th>Vehicle Type Id test data</th>
-                            <th>Vehicle Type Name test data</th>
-                        </tr>
-                        <tr>
-                            <th>Vehicle Type Id test data</th>
-                            <th>Vehicle Type Name test data</th>
-                        </tr>
-                        <tr>
-                            <th>Vehicle Type Id test data</th>
-                            <th>Vehicle Type Name test data</th>
-                        </tr>
-                        <tr>
-                            <th>Vehicle Type Id test data</th>
-                            <th>Vehicle Type Name test data</th>
-                        </tr>
-                    </tbody>
-                    <tfoot>
-                    </tfoot>
-                </table>
+        <div v-if="radioType == 2" class="card border-warning mb-3 rounded">
+            <div class="card-body p-2">
+                <div>
+                    <div class="col-lg-12 p-3">
+                        <h3>vehicle Types Based on Mark ID</h3><br />
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <div class="alert alert-dismissible alert-warning rounded" style="justify-items: center;">
+                                    <div class="input-group">
+                                        <input v-model="makedIdTypes" min="0" type="number" class="form-control" placeholder="Enter Mark ID" aria-label="Make Id" aria-describedby="button-addon2">
+                                        <button class="btn btn-warning" type="button" id="button-addon2" v-on:click="GetVehicleTypes" :disabled="makedIdTypes == 0 || makedIdTypes == null">Search</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-8"></div>
+                        <table id="vehicleTypes_table" class="table table-striped" style="width:100%">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th>Vehicle Type Id</th>
+                                    <th>Vehicle Type Name</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="(vehicle,index) in vehicleTypes">
+                                    <td>
+                                        {{vehicle.vehicleTypeId}}
+                                    </td>
+                                    <td>
+                                        {{vehicle.vehicleTypeName}}
+                                    </td>
+                                </tr>
+                            </tbody>
+                            <tfoot>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
-        <div id="vehicleModels_div" style="display: none;">
-            <div class="col-lg-12 p-3">
-                <table id="vehicleModels_table" class="table table-striped" style="width:100%">
-                    <thead class="table-dark">
-                        <tr>
-                            <th>Make ID</th>
-                            <th>Make Name</th>
-                            <th>Model ID</th>
-                            <th>Model Name</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <th>Make ID Testing DATA</th>
-                            <th>Make Name Testing DATA</th>
-                            <th>Model ID Testing DATA</th>
-                            <th>Model Name Testing DATA</th>
-                        </tr>
-                        <tr>
-                            <th>Make ID Testing DATA</th>
-                            <th>Make Name Testing DATA</th>
-                            <th>Model ID Testing DATA</th>
-                            <th>Model Name Testing DATA</th>
-                        </tr>
-                        <tr>
-                            <th>Make ID Testing DATA</th>
-                            <th>Make Name Testing DATA</th>
-                            <th>Model ID Testing DATA</th>
-                            <th>Model Name Testing DATA</th>
-                        </tr>
-                        <tr>
-                            <th>Make ID Testing DATA</th>
-                            <th>Make Name Testing DATA</th>
-                            <th>Model ID Testing DATA</th>
-                            <th>Model Name Testing DATA</th>
-                        </tr>
-                        <tr>
-                            <th>Make ID Testing DATA</th>
-                            <th>Make Name Testing DATA</th>
-                            <th>Model ID Testing DATA</th>
-                            <th>Model Name Testing DATA</th>
-                        </tr>
-                        <tr>
-                            <th>Make ID Testing DATA</th>
-                            <th>Make Name Testing DATA</th>
-                            <th>Model ID Testing DATA</th>
-                            <th>Model Name Testing DATA</th>
-                        </tr>
-                        <tr>
-                            <th>Make ID Testing DATA</th>
-                            <th>Make Name Testing DATA</th>
-                            <th>Model ID Testing DATA</th>
-                            <th>Model Name Testing DATA</th>
-                        </tr>
-                        <tr>
-                            <th>Make ID Testing DATA</th>
-                            <th>Make Name Testing DATA</th>
-                            <th>Model ID Testing DATA</th>
-                            <th>Model Name Testing DATA</th>
-                        </tr>
-                        <tr>
-                            <th>Make ID Testing DATA</th>
-                            <th>Make Name Testing DATA</th>
-                            <th>Model ID Testing DATA</th>
-                            <th>Model Name Testing DATA</th>
-                        </tr>
-                    </tbody>
-                    <tfoot>
-                    </tfoot>
-                </table>
+    </div>
+    <div v-if="radioType == 3" class="card border-warning mb-3 rounded">
+        <div class="card-body p-2">
+            <div>
+                <div class="col-lg-12 p-3">
+                    <h3>vehicle Models Based on Make ID and Model Year</h3><br />
+                    <div class="row">
+                        <div class="col-lg-8">
+                            <div class="alert alert-dismissible alert-warning rounded" style="justify-items: center;">
+                                <div class="row col-lg-12">
+                                    <div class="col-lg-4">
+                                        <input v-model="makedIdModels" min="0" type="number" class="form-control" placeholder="Enter Make ID" aria-label="Make Id" aria-describedby="button-addon3">
+                                    </div>
+                                    <div class="col-lg-4 has-danger">
+                                        <div class="col-lg-12 input-group">
+                                            <input v-model="modelYear" min="0" type="number" :class="{'form-control': true, 'is-invalid': invalidYear}" placeholder="Enter Model Year" id="inputInvalid" aria-label="Make Id" aria-describedby="button-addon3">
+                                            <div class="invalid-feedback">Please enter a model year between 1981 and 2999!</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4" style="text-align-last: end;">
+                                        <button class="btn btn-warning" type="button" id="button-addon3" v-on:click="GetVehicleModels" :disabled="makedIdModels == 0 || makedIdModels == null || modelYear == 0 || modelYear == null">Search</button>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4"></div>
+                    <table id="vehicleModels_table" class="table table-striped" style="width:100%">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>Make ID</th>
+                                <th>Make Name</th>
+                                <th>Model ID</th>
+                                <th>Model Name</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="(vehicleModel,index) in vehicleModels">
+                                <td>
+                                    {{vehicleModel.make_ID}}
+                                </td>
+                                <td>
+                                    {{vehicleModel.make_Name}}
+                                </td>
+                                <td>
+                                    {{vehicleModel.model_ID}}
+                                </td>
+                                <td>
+                                    {{vehicleModel.model_Name}}
+                                </td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                        </tfoot>
+                    </table>
+                </div>
             </div>
         </div>
 
-
+        <div class="card-body p-2">
+            <div>
+                <div class="col-lg-12 p-3">
+                </div>
+            </div>
+        </div>
     </div>
 </body>
 </html>
@@ -205,52 +174,93 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdn.datatables.net/2.1.8/js/dataTables.js"></script>
 <script src="https://cdn.datatables.net/2.1.8/js/dataTables.bootstrap5.js"></script>
+<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script>
-    new DataTable('#example');
+    new DataTable('#allMakes_table');
     let allMakes_table, vehicleTypes_table, vehicleModels_table;
-
     $(document).ready(function () {
         allMakes_table = $('#allMakes_table').DataTable({
+            processing: true, // Show a loading indicator
+            serverSide: false, // Set to true if you want server-side processing
             ajax: {
-                url: '/api/makes',/* TODO: Back-end(Link Api) */
-                dataSrc: ''
+                url: '/Home/GetAllMakes', // Correct URL to your controller method
+                type: 'POST', // Ensure the HTTP method matches your action method
+                dataSrc: 'Result', // Match the key in your API response
+                error: function (xhr, error, thrown) {
+                    console.error("Error loading data:", error, thrown);
+                }
             },
             columns: [
-                { data: 'Make_ID' },
-                { data: 'Make_Name' }
-            ]
+                { data: "make_ID", name: "make_ID", autoWidth: true },
+                { data: "make_Name", name: "make_Name", autoWidth: true },
+            ],
+            pageLength: 10, // Set default number of entries per page
+            lengthMenu: [5, 10, 20, 50], // Dropdown options for entries per page
+            searching: true, // Enable the search bar
+            paging: true,
+            ordering: true,
+            language: {
+                search: "Filter records:",
+                lengthMenu: "Show _MENU_ entries",
+                info: "Showing _START_ to _END_ of _TOTAL_ entries",
+                paginate: {
+                    first: "First",
+                    last: "Last",
+                    next: "Next",
+                    previous: "Previous"
+                }
+            }
         });
-
-        // vehicleTypes_table = $('#vehicleTypes_table').DataTable({
-        //     ajax: {
-        //         url: '/api/vehicletypes',/* TODO: Back-end(Link Api) */
-        //         dataSrc: ''
-        //     },
-        //     columns: [
-        //         { data: 'VehicleTypeId' },
-        //         { data: 'VehicleTypeName' }
-        //     ]
-        // });
-
-        // vehicleModels_table = $('#vehicleModels_table').DataTable({
-        //     ajax: {
-        //         url: function (data) {
-        //             const p1 = 1;
-        //             const p2 = 2;
-        //             return `/api/models?p1=${p1}&p2=${p2}`; /* TODO: Back-end(Link Api) */
-        //         },
-        //         dataSrc: ''
-        //     },
-        //     columns: [
-        //         { data: 'Make_ID' },
-        //         { data: 'Make_Name' },
-        //         { data: 'Model_ID' },
-        //         { data: 'Model_Name' }
-        //     ]
-        // });
-
-        toggleDivs();
     });
+    // $(document).ready(function () {
+    //     allMakes_table = $('#allMakes_table').DataTable({
+    //         processing: true, // Show a loading indicator
+    //         serverSide: false, // Set to true only if your API supports server-side pagination
+    //         ajax: {
+    //             url: '/Home/GetAllMakes', // Correct URL to your controller method
+    //             type: 'POST', // Ensure the HTTP method matches your action method
+    //             dataSrc: 'Result', // Match the 'Result' key in your API response
+    //             error: function (xhr, error, thrown) {
+    //                 console.error("Error loading data:", error, thrown);
+    //             }
+    //         },
+    //         columns: [
+    //             { "data": "make_ID", "name": "make_ID", "autoWidth": false },
+    //             { "data": "make_Name", "name": "make_Name", "autoWidth": false },
+    //         ]
+    //     });
+
+    //     // vehicleTypes_table = $('#vehicleTypes_table').DataTable({
+    //     //     ajax: {
+    //     //         url: '/api/vehicletypes',/* TODO: Back-end(Link Api) */
+    //     //         dataSrc: ''
+    //     //     },
+    //     //     columns: [
+    //     //         { data: 'VehicleTypeId' },
+    //     //         { data: 'VehicleTypeName' }
+    //     //     ]
+    //     // });
+
+    //     // vehicleModels_table = $('#vehicleModels_table').DataTable({
+    //     //     ajax: {
+    //     //         url: function (data) {
+    //     //             const p1 = 1;
+    //     //             const p2 = 2;
+    //     //             return `/api/models?p1=${p1}&p2=${p2}`; /* TODO: Back-end(Link Api) */
+    //     //         },
+    //     //         dataSrc: ''
+    //     //     },
+    //     //     columns: [
+    //     //         { data: 'Make_ID' },
+    //     //         { data: 'Make_Name' },
+    //     //         { data: 'Model_ID' },
+    //     //         { data: 'Model_Name' }
+    //     //     ]
+    //     // });
+
+    //     toggleDivs();
+    // });
 
     function toggleDivs() {
         const selectedValue = document.querySelector('input[name="value-radio"]:checked').value;
@@ -274,4 +284,70 @@
     radios.forEach(radio => {
         radio.addEventListener("change", toggleDivs);
     });
+</script>
+<script>
+    const { createApp } = Vue;
+    createApp({
+        data() {
+            return {
+                allMakes: [],
+                vehicleTypes: [],
+                vehicleModels: [],
+                radioType: 1,
+                makedIdTypes: null,
+                modelYear: null,
+                makedIdModels: null,
+                invalidYear: false,
+            };
+        },
+        methods: {
+            load() {
+                axios.post(`/Home/GetAllMakes/`)
+                    .then(response => {
+                        this.allMakes = response.data.result;
+                    })
+                    .catch((error) => {
+                        console.error("Error loading data:", error);
+                    });
+            },
+            GetVehicleTypes() {
+                axios.post(`/Home/GetVehicleTypes/${this.makedIdTypes}`)
+                    .then(response => {
+                        this.vehicleTypes = response.data.result;
+                    })
+                    .catch((error) => {
+                        console.error("Error loading data:", error);
+                    });
+            },
+            GetVehicleModels() {
+                debugger;
+                let invalidYear = this.CheckYear();
+                if (!invalidYear) {
+                    axios.post(`/Home/GetVehicleModels?makeId=${this.makedIdModels}&modelYear=${this.modelYear}`)
+                        .then(response => {
+                            this.vehicleModels = response.data.result;
+                        })
+                        .catch((error) => {
+                            console.error("Error loading data:", error);
+                        });
+                }
+            },
+            CheckYear() {
+                if (this.modelYear >= 1981 && this.modelYear <= 2999) {
+                    this.invalidYear = false;
+                    return false;
+                }
+                else {
+                    this.invalidYear = true;
+                    return true;
+                }
+            },
+            updateMessage() {
+                this.message = "You clicked the button!";
+            }
+        },
+        mounted() {
+            this.load();
+        }
+    }).mount('#app');
 </script>
