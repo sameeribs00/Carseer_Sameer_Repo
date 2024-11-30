@@ -1,6 +1,4 @@
-﻿using System.Text.Json;
-
-namespace SameerIbseleh_Carseer.Services.HomeServices
+﻿namespace SameerIbseleh_Carseer.Services.HomeServices
 {
     public class HomeService : IHomeService
     {
