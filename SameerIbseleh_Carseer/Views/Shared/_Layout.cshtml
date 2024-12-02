@@ -8,13 +8,34 @@
     <link rel="stylesheet" href="~/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/SameerIbseleh_Carseer.styles.css" asp-append-version="true" />
+    <style>
+        .large-text {
+            font-size: 1.5em;
+            color: #f0ad4e;
+        }
 
+        .small-text {
+            font-size: 0.6em; 
+            color: gray;
+        }
+
+        .separator {
+            display: inline-block;
+            width: 1px;
+            height: 100px;
+            background-color: #f0ad4e;
+        }
+    </style>
 </head>
+
 <body>
     <header>
         <nav class="navbar navbar-expand-lg bg-primary mb-3" data-bs-theme="dark">
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Sameer Ibseleh_Carseer</a> @* TODO: add_logo_here *@
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
+                    <span class="large-text">Carseer</span> <span class="small-text">powered by Sameer</span>
+                </a> @* TODO: add_logo_here *@
+                <span class="separator"></span>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -23,9 +44,9 @@
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
                             <a class="nav-link text-white text-decoration-underline" asp-area="" asp-controller="Home" asp-action="Index">Carseer WareHouse</a>
-                        </li>@* 
+                        </li>@*
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li> *@
                     </ul>
                 </div>
