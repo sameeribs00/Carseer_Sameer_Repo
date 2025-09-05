@@ -1,6 +1,6 @@
 Car Search Engine
 A full-stack web application for searching and filtering a large database of car models.
-This solution provides a modern, user-friendly cascading search experience, allowing users to efficiently find specific car models based on their type and other categories from an implemented third-party integration with data source.
+This solution was mainly to learn deployment on AWS-Cloud, provides a modern, user-friendly cascading search experience, allowing users to efficiently find specific car models based on their type and other categories from an implemented third-party integration with data source.
 
 • Tech Stack
   The application is built on a robust and modern technology stack to ensure performance, scalability, and maintainability.
